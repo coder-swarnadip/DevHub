@@ -1,14 +1,31 @@
-const express = require('express');;
-const app= express();
+const express = require("express");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+
+const healthRoutes = require("./routes/health.routes");
+
+const app = express();
+
+
+const authRoutes = require("./routes/auth.route");
+
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 
 
+app.use("/api/health", healthRoutes);
 
-const healthRoutes = require('./routes/health.routes');
+app.use("/api/auth", authRoutes);
 
 
-app.use('/health', healthRoutes);
 
 module.exports = app;
-
-
