@@ -2,6 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
+const errorMiddleware = require('./middlewares/error.middleware');
+
+
 const healthRoutes = require("./routes/health.routes");
 
 const app = express();
@@ -28,4 +31,6 @@ app.use("/api/auth", authRoutes);
 
 
 
+app.use(errorMiddleware.notfound);
+app.use(errorMiddleware.errorHandler);
 module.exports = app;
