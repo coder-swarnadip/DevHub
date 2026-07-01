@@ -8,6 +8,7 @@ const {
 
 const { protect } = require("../middlewares/auth.middleware");
 const validate = require("../middlewares/validate.middleware");
+const wrapAsync = require("../utils/wrapAsync");
 
 const {
   updateProfileValidator,
@@ -15,11 +16,7 @@ const {
 
 const router = express.Router();
 
-
-
-
 router.get("/search", protect, wrapAsync(searchUsers));
-router.get("/:username", wrapAsync(getUserProfile));
 
 router.patch(
   "/profile",
@@ -28,4 +25,7 @@ router.patch(
   validate,
   wrapAsync(updateProfile)
 );
+
+router.get("/:username", wrapAsync(getUserProfile));
+
 module.exports = router;

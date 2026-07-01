@@ -5,12 +5,13 @@ const cookieParser = require("cookie-parser");
 const errorMiddleware = require('./middlewares/error.middleware');
 
 
-const healthRoutes = require("./routes/health.routes");
 
 const app = express();
 
 
+const healthRoutes = require("./routes/health.routes");
 const authRoutes = require("./routes/auth.route");
+const userRoutes = require("./routes/user.route");
 
 app.use(
   cors({
@@ -26,11 +27,18 @@ app.use(cookieParser());
 
 
 app.use("/api/health", healthRoutes);
-
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 
 
+
+
+
+
+ 
 app.use(errorMiddleware.notfound);
 app.use(errorMiddleware.errorHandler);
+
+
 module.exports = app;

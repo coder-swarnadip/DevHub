@@ -1,4 +1,4 @@
-const User = require("../models/user.model");
+const User = require("../models/User");
 const ApiError = require("../utils/ApiError");
 
 const getUserProfile = async (req, res) => {
@@ -60,14 +60,14 @@ const searchUsers = async (req, res) => {
   }
 
   const users = await User.find({
+    isBlocked: false,
     $or: [
       { name: { $regex: query, $options: "i" } },
       { username: { $regex: query, $options: "i" } },
       { skills: { $regex: query, $options: "i" } },
     ],
-    isBlocked: false,
   })
-    .select("name username avatar bio skills location followersCount")
+    .select("name username avatar bio skills location followersCount followingCount")
     .limit(20);
 
   return res.status(200).json({
